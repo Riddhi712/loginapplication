@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My App{% endblock %}</title>
+    <!-- Bootstrap 4 CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background: linear-gradient(90deg, #1a1a2e 0%, #16213e 100%) !important;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: #00d4ff !important;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        .nav-link {
+            color: #e0e0e0 !important;
+            transition: all 0.3s ease;
+            border-radius: 20px;
+            padding: 8px 16px !important;
+            margin: 0 5px;
+        }
+
+        .nav-link:hover {
+            color: #00d4ff !important;
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-item.active .nav-link {
+            color: #00d4ff !important;
+            background: rgba(0, 212, 255, 0.2);
+        }
+
+        /* Flash Messages */
+        .alert {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .alert-success {
+            background: linear-gradient(90deg, #00b09b 0%, #96c93d 100%);
+            color: white;
+        }
+
+        .alert-danger {
+            background: linear-gradient(90deg, #ff416c 0%, #ff4b2b 100%);
+            color: white;
+        }
+
+        .alert-info {
+            background: linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%);
+            color: white;
+        }
+
+        /* Container Styling */
+        .container {
+            padding-top: 20px;
+        }
+
+        /* Footer spacing */
+        .main-content {
+            min-height: calc(100vh - 100px);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="{{ url_for('home') }}"><i class="fas fa-shield-alt"></i> MyApp</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item {% if request.endpoint == 'home' %}active{% endif %}">
+                    <a class="nav-link" href="{{ url_for('home') }}"><i class="fas fa-home"></i> Home</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                {% if session.username %}
+                    <li class="nav-item">
+                        <span class="navbar-text mr-3" style="color: #00ff88 !important; font-weight: bold;">
+                            <i class="fas fa-user-circle"></i> Welcome, {{ session.username }}!
+                        </span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item {% if request.endpoint == 'register' %}active{% endif %}">
+                        <a class="nav-link" href="{{ url_for('register') }}"><i class="fas fa-user-plus"></i> Register</a>
+                    </li>
+                    <li class="nav-item {% if request.endpoint == 'login' %}active{% endif %}">
+                        <a class="nav-link" href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div class="container mt-4">
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible fade show">
+                            <i class="fas fa-info-circle"></i> {{ message }}
+                            <button type="button" class="close text-white" data-dismiss="alert">&times;</button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

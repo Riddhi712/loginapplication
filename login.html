@@ -1,0 +1,182 @@
+{% extends "layout.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<style>
+    .login-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        overflow: hidden;
+        backdrop-filter: blur(10px);
+    }
+
+    .login-header {
+        background: linear-gradient(90deg, #11998e 0%, #38ef7d 100%);
+        color: white;
+        padding: 30px;
+        text-align: center;
+    }
+
+    .login-header h3 {
+        margin: 0;
+        font-weight: 700;
+        font-size: 1.8rem;
+    }
+
+    .login-header i {
+        font-size: 3rem;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .login-body {
+        padding: 40px;
+    }
+
+    .form-group label {
+        color: #555;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .form-control {
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        padding: 12px 15px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: #11998e;
+        box-shadow: 0 0 0 3px rgba(17, 153, 142, 0.2);
+    }
+
+    .input-icon {
+        position: relative;
+    }
+
+    .input-icon i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #11998e;
+    }
+
+    .input-icon .form-control {
+        padding-left: 45px;
+    }
+
+    .btn-login-submit {
+        background: linear-gradient(90deg, #11998e 0%, #38ef7d 100%);
+        border: none;
+        color: white;
+        padding: 15px;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        width: 100%;
+        box-shadow: 0 10px 30px rgba(17, 153, 142, 0.4);
+        transition: all 0.3s ease;
+        margin-top: 10px;
+    }
+
+    .btn-login-submit:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(17, 153, 142, 0.6);
+    }
+
+    .register-link {
+        color: #11998e;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .register-link:hover {
+        color: #38ef7d;
+        text-decoration: underline;
+    }
+
+    .divider {
+        text-align: center;
+        margin: 20px 0;
+        position: relative;
+    }
+
+    .divider::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #ddd, transparent);
+    }
+
+    .divider span {
+        background: white;
+        padding: 0 15px;
+        color: #999;
+        position: relative;
+    }
+
+    .remember-me {
+        color: #666;
+    }
+
+    .custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+        background-color: #11998e;
+        border-color: #11998e;
+    }
+</style>
+
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="login-card">
+            <div class="login-header">
+                <i class="fas fa-sign-in-alt"></i>
+                <h3>Welcome Back</h3>
+            </div>
+            <div class="login-body">
+                <form method="POST" action="{{ url_for('login') }}">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <div class="input-icon">
+                            <i class="fas fa-user"></i>
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Enter username" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="input-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
+                        </div>
+                    </div>
+                    <div class="form-group custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="remember">
+                        <label class="custom-control-label remember-me" for="remember">Remember me</label>
+                    </div>
+                    <button type="submit" class="btn btn-login-submit">
+                        <i class="fas fa-arrow-right"></i> Login
+                    </button>
+                </form>
+                
+                <div class="divider">
+                    <span>or</span>
+                </div>
+                
+                <p class="text-center mb-0">
+                    Don't have an account? <a href="{{ url_for('register') }}" class="register-link">Register here</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
